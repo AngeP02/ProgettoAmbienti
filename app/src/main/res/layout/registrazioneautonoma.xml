@@ -10,10 +10,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -51,8 +51,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="124dp"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="Nome"
+                android:hint="Nome"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,43 +64,111 @@
                 android:layout_height="61dp"
                 android:layout_marginTop="212dp"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="Cognome"
+                android:hint="Cognome"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.449"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
+
             <EditText
                 android:id="@+id/email"
-                android:layout_width="318dp"
-                android:layout_height="57dp"
-                android:ems="10"
-                android:inputType="phone"
-                android:text="@string/email2"
-                tools:layout_editor_absoluteX="40dp"
-                tools:layout_editor_absoluteY="341dp" />
-
-            <EditText
-                android:id="@+id/editTextPhone4"
                 android:layout_width="322dp"
                 android:layout_height="57dp"
+                android:layout_marginTop="36dp"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="@string/confirm_password2"
-                tools:layout_editor_absoluteX="36dp"
-                tools:layout_editor_absoluteY="433dp" />
+                android:hint="Email"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.449"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="322dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="36dp"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.449"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email" />
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="322dp"
+                android:layout_height="57dp"
+                android:layout_marginTop="36dp"
+                android:ems="10"
+                android:hint="Conferma password"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.449"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="130dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="Data di nascita"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.661"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView4"
+                app:srcCompat="@android:drawable/btn_dropdown" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="161dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="36dp"
+                android:text="Data di nascita"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.168"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Cognome" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/avanti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="72dp"
-                android:text="Registrati"
+                android:layout_marginTop="24dp"
+                android:text="Avanti"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintHorizontal_bias="0.848"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPhone4" />
+                app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
+            <Button
+                android:id="@+id/indietro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Indietro"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.105"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="127dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="28dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+                app:layout_constraintHorizontal_bias="0.711"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

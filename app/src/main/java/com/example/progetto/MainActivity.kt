@@ -1,7 +1,10 @@
 package com.example.progetto
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,9 +18,18 @@ class MainActivity : AppCompatActivity() {
         } else {
             // L'utente non è ancora registrato, mostra il layout di scelta utente
             setContentView(R.layout.layoutsceltautente)
+            // Trova il bottone "autonomo" nel layout
+            val autonomoButton: ImageButton = findViewById(R.id.imageButton6)
+            // Aggiungi un listener al bottone
+            autonomoButton.setOnClickListener {
+                // Avvia un'attività per la schermata di registrazione
+                    val intent = Intent(this, RegistrazioneActivity::class.java)
+                    startActivity(intent)
+                }
         }
 
     }
+
     private fun checkIfUserIsRegistered(): Boolean {
         // Ottieni un'istanza del database
         val dbHelper = MyDatabaseHelper(this)
