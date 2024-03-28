@@ -158,12 +158,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="127dp"
-                android:layout_height="37dp"
+            <EditText
+                android:id="@+id/dataNascita"
+                android:layout_width="130dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="28dp"
-                android:text="TextView"
+                android:hint="dd/mm/aaaa"
                 app:layout_constraintEnd_toStartOf="@+id/imageButton3"
                 app:layout_constraintHorizontal_bias="0.711"
                 app:layout_constraintStart_toStartOf="parent"
