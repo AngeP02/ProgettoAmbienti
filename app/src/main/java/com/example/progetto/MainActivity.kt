@@ -7,8 +7,11 @@ import android.widget.ImageButton
 
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // Controlla se l'utente è già registrato
         val isUserRegistered = checkIfUserIsRegistered()
 

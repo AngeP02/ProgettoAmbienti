@@ -32,7 +32,7 @@ class ContattiActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.numeripreferiti)
-        dbHelper = MyDatabaseHelper(this)
+        dbHelper = MyDatabaseHelper(applicationContext)
         val indietroButton: Button = findViewById(R.id.indietro1)
         // Aggiungi un listener al bottone
         indietroButton.setOnClickListener {
@@ -55,9 +55,8 @@ class ContattiActivity: AppCompatActivity() {
         val nome = intent.getStringExtra("nome")
         val cognome = intent.getStringExtra("cognome")
         val dataNascita = intent.getStringExtra("dataNascita")
-        // GESTIRE NULL POINTER EXCEPTION
         val email = intent.getStringExtra("email")
-        val password = intent.getStringExtra("password")
+        val password = intent.getIntExtra("password",0)
 
         val nome1EditText: EditText = findViewById(R.id.Nome1)
         val cognome1EditText: EditText = findViewById(R.id.Cognome1)
@@ -69,16 +68,16 @@ class ContattiActivity: AppCompatActivity() {
         val nome2EditText: EditText = findViewById(R.id.Nome2)
         val cognome2EditText: EditText = findViewById(R.id.Cognome2)
         val numTelefono2EditText: EditText = findViewById(R.id.NumTelefono2)
-        val nome2 = nome1EditText.text.toString()
-        val cognome2 = cognome1EditText.text.toString()
-        val telefono2 = numTelefono1EditText.text.toString()
+        val nome2 = nome2EditText.text.toString()
+        val cognome2 = cognome2EditText.text.toString()
+        val telefono2 = numTelefono2EditText.text.toString()
 
         val nome3EditText: EditText = findViewById(R.id.Nome3)
         val cognome3EditText: EditText = findViewById(R.id.Cognome3)
         val numTelefono3EditText: EditText = findViewById(R.id.NumTelefono3)
-        val nome3 = nome1EditText.text.toString()
-        val cognome3 = cognome1EditText.text.toString()
-        val telefono3 = numTelefono1EditText.text.toString()
+        val nome3 = nome3EditText.text.toString()
+        val cognome3 = cognome3EditText.text.toString()
+        val telefono3 = numTelefono3EditText.text.toString()
 
         // Controlla se i campi non sono vuoti prima di salvare
         if (nome1.isNotEmpty() && cognome1.isNotEmpty() && telefono1.isNotEmpty()) {

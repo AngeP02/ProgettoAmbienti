@@ -24,6 +24,10 @@
         <activity
         android:name=".RegistrazioneActivity">
     </activity>
+        <activity android:name=".ContattiActivity" />
+
+    <activity android:name=".HomePageAutonoma" />
+
     </application>
 
 </manifest>
