@@ -30,12 +30,16 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         const val COLUMN_TELEFONOCONTATTO3 = "telefonocontatto3"
 
         private const val TAG = "MyDatabaseHelper"
-        private const val CREATE_TABLE_USER =
+        /*private const val CREATE_TABLE_USER =
             "CREATE TABLE user (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "username TEXT," +
                     "password TEXT" +
-                    ")"
+                    ")"*/
+
+        const val TABLE_USER = "user"
+        const val COLUMN_EMAILL = "email"
+        const val COLUMN_PASSWORDL = "password"
     }
 
 
@@ -58,9 +62,15 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
                 + COLUMN_TELEFONOCONTATTO3 + " TEXT"
                 + ")")
 
+        val user = ("CREATE TABLE " +
+                TABLE_USER + "("
+                + COLUMN_EMAILL + " TEXT PRIMARY KEY,"
+                + COLUMN_PASSWORDL + " TEXT"
+                + ")")
+
 
         Log.d("MyDatabaseHelper", "Query di creazione della tabella: $datiUtente")
-        db.execSQL(CREATE_TABLE_USER)
+        db.execSQL(user)
         db.execSQL(datiUtente)
 
     }

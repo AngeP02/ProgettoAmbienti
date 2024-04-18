@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
@@ -13,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.security.MessageDigest
 import java.sql.Date
 import java.text.ParseException
 import java.util.Calendar
@@ -57,13 +59,13 @@ class RegistrazioneActivity : AppCompatActivity() {
                 val password = passwordEditText.text.toString()
                 val confermaPassword = confermaPasswordEditText.text.toString()
 
-
-                    if (nome.isNotBlank() && cognome.isNotBlank() && dataNascita.isNotBlank() && email.isNotBlank() && password.isNotBlank() && confermaPassword.isNotBlank()) {
+                if (nome.isNotBlank() && cognome.isNotBlank() && dataNascita.isNotBlank() && email.isNotBlank() && password.isNotBlank() && confermaPassword.isNotBlank()) {
                         val intent = Intent(this, ContattiActivity::class.java)
 
                         // Definisci il pattern per il formato della data "dd/MM/yyyy" con il controllo del mese compreso tra 1 e 12
-                        val pattern = """(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"""
-                        // Crea un oggetto Regex con il pattern definito
+                    val pattern = """(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}"""
+
+                    // Crea un oggetto Regex con il pattern definito
                         val regex = Regex(pattern)
 
                         val dataNascitaString = dataNascitaEditText.text.toString()
@@ -76,7 +78,11 @@ class RegistrazioneActivity : AppCompatActivity() {
                                 intent.putExtra("cognome", cognome)
                                 intent.putExtra("dataNascita", dataNascita)
                                 intent.putExtra("email", email)
-                                intent.putExtra("password", password.hashCode())
+                                val hashedPassword = hashPassword(password)
+                                val hashedPasswordBase64 = Base64.encodeToString(hashedPassword.toByteArray(), Base64.DEFAULT)
+                                intent.putExtra("password", hashedPasswordBase64)
+
+                                intent.putExtra("password", hashedPassword)
                                 startActivity(intent)
                             }
                             else{
@@ -99,6 +105,13 @@ class RegistrazioneActivity : AppCompatActivity() {
             }
         }
     }
+    fun hashPassword(password: String): String {
+        val bytes = password.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
+
     private fun showDatePickerDialog(dataButton: ImageButton) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

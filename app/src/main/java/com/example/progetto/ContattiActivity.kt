@@ -44,7 +44,7 @@ class ContattiActivity: AppCompatActivity() {
         // Aggiungi un listener al bottone
         avantiButton.setOnClickListener {
             // Avvia un'attività per la schermata di registrazione
-            val intent = Intent(this, HomePageAutonoma::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             salvaContatto()
             startActivity(intent)
         }
@@ -56,7 +56,7 @@ class ContattiActivity: AppCompatActivity() {
         val cognome = intent.getStringExtra("cognome")
         val dataNascita = intent.getStringExtra("dataNascita")
         val email = intent.getStringExtra("email")
-        val password = intent.getIntExtra("password",0)
+        val password = intent.getStringExtra("password")
 
         val nome1EditText: EditText = findViewById(R.id.Nome1)
         val cognome1EditText: EditText = findViewById(R.id.Cognome1)

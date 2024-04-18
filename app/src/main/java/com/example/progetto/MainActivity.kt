@@ -39,8 +39,13 @@ class MainActivity : AppCompatActivity() {
         val db = dbHelper.readableDatabase
 
         // Esegui la query per verificare se esiste un record corrispondente all'utente
-        val query = "SELECT COUNT(*) FROM user WHERE username = ?"
-        val cursor = db.rawQuery(query, arrayOf("username_da_verificare"))
+        //val query = "SELECT COUNT(*) FROM user WHERE email = ?"
+        // Esegui la query per verificare se esiste almeno un record nella tabella degli utenti
+
+        val query = "SELECT COUNT(*) FROM ${MyDatabaseHelper.TABLE_USER}"
+        val cursor = db.rawQuery(query, null)
+
+
 
         // Ottieni il numero di righe nel cursore (dovrebbe essere 0 se l'utente non è registrato)
         cursor.moveToFirst()
@@ -53,4 +58,8 @@ class MainActivity : AppCompatActivity() {
         // Restituisci true se l'utente è registrato (count > 0), false altrimenti
         return count > 0
     }
+
+
+
+
 }

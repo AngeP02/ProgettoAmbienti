@@ -25,6 +25,8 @@
         android:name=".RegistrazioneActivity">
     </activity>
         <activity android:name=".ContattiActivity" />
+        <activity android:name=".LoginActivity" />
+
 
     <activity android:name=".HomePageAutonoma" />
 
