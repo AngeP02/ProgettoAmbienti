@@ -1,5 +1,6 @@
 package com.example.progetto.Contatti
 
+import android.content.ContentValues
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.progetto.MyDatabaseHelper
@@ -347,6 +348,113 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
             // Altrimenti, restituisci il valore estratto dal database
             return telefonoContatto3
         }
+    }
+    fun setNome1(nome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_NOMECONTATTO1, nome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setCognome1(cognome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO1, cognome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setNumTelefono1(numero: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO1, numero)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setNome2(nome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_NOMECONTATTO2, nome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setCognome2(cognome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO2, cognome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setNumTelefono2(numero: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO2, numero)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setNome3(nome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_NOMECONTATTO3, nome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setCognome3(cognome: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO3, cognome)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
+    }
+
+    fun setNumTelefono3(numero: String) {
+        dbHelper = MyDatabaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues().apply {
+            put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO3, numero)
+        }
+        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+        // Chiudi il database
+        db.close()
     }
 
 }

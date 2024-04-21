@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isUserRegistered) {
             // L'utente è già registrato, mostra la homepage
-            setContentView(R.layout.homepagecaregiver)
+            setContentView(R.layout.homepage)
         } else {
             // L'utente non è ancora registrato, mostra il layout di scelta utente
             setContentView(R.layout.layoutsceltautente)
