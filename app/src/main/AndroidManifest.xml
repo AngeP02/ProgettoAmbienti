@@ -29,6 +29,17 @@
 
 
     <activity android:name=".HomePageAutonoma" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.progetto.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- Definisci i percorsi per i quali il provider di file può essere utilizzato -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
 
     </application>
 

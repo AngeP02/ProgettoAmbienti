@@ -349,7 +349,7 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
             return telefonoContatto3
         }
     }
-    fun setNome1(nome: String) {
+   /* fun setNome1(nome: String) {
         dbHelper = MyDatabaseHelper(applicationContext)
         val db = dbHelper.writableDatabase
 
@@ -359,7 +359,26 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
         // Chiudi il database
         db.close()
-    }
+    }*/
+   fun setNome1(nome: String) {
+       dbHelper = MyDatabaseHelper(applicationContext)
+       val db = dbHelper.writableDatabase
+
+       val values = ContentValues().apply {
+           put(MyDatabaseHelper.COLUMN_NOMECONTATTO1, nome)
+       }
+
+       // Eseguire l'operazione di aggiornamento
+       val count = db.update(
+           MyDatabaseHelper.TABLE_CONTATTI,
+           values,
+           null,
+           null
+       )
+       // Chiudi il database
+       db.close()
+   }
+
 
     fun setCognome1(cognome: String) {
         dbHelper = MyDatabaseHelper(applicationContext)
@@ -368,7 +387,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO1, cognome)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
@@ -380,7 +406,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO1, numero)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
@@ -392,7 +425,22 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_NOMECONTATTO2, nome)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
+
+        // Verificare se l'aggiornamento è riuscito
+        if (count == 1) {
+            // Aggiornamento riuscito
+        } else {
+            // Aggiornamento non riuscito
+        }
+
         // Chiudi il database
         db.close()
     }
@@ -404,7 +452,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO2, cognome)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
@@ -416,7 +471,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO2, numero)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
@@ -428,11 +490,17 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_NOMECONTATTO3, nome)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
-
     fun setCognome3(cognome: String) {
         dbHelper = MyDatabaseHelper(applicationContext)
         val db = dbHelper.writableDatabase
@@ -440,7 +508,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_COGNOMECONTATTO3, cognome)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }
@@ -452,7 +527,14 @@ class ContattiViewModel(private val applicationContext: Context) : ViewModel(){
         val values = ContentValues().apply {
             put(MyDatabaseHelper.COLUMN_TELEFONOCONTATTO3, numero)
         }
-        db.insert(MyDatabaseHelper.TABLE_CONTATTI, null, values)
+
+        // Eseguire l'operazione di aggiornamento
+        val count = db.update(
+            MyDatabaseHelper.TABLE_CONTATTI,
+            values,
+            null,
+            null
+        )
         // Chiudi il database
         db.close()
     }

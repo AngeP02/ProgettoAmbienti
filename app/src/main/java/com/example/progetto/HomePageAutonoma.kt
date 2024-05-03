@@ -18,7 +18,7 @@ class HomePageAutonoma : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HomepageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setSupportActionBar(binding.toolbar)
         val navView: BottomNavigationView = binding.navView
 
         // Inizializza il NavHostFragment

@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_menu"
-    app:startDestination="@id/navigation_contatti">
+    app:startDestination="@id/navigation_medicine">
 
     <fragment
         android:id="@+id/navigation_contatti"
         android:name= "com.example.progetto.Contatti.ContattiFragment"
         android:label="Contatti"
         tools:layout="@layout/contattifragment" />
+
+    <fragment
+        android:id="@+id/navigation_medicine"
+        android:name= "com.example.progetto.Farmaci.FarmaciFragment"
+        android:label="Farmaci"
+        tools:layout="@layout/farmacifragment" />
 </navigation>

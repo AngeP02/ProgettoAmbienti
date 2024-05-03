@@ -20,7 +20,7 @@
         <EditText
             android:id="@+id/editTextNome"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="28dp"
             android:hint="Inserisci il nome"
             android:inputType="text"
@@ -44,7 +44,7 @@
         <EditText
             android:id="@+id/editTextCognome"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="28dp"
             android:hint="Inserisci il cognome"
             android:inputType="text"
@@ -68,7 +68,7 @@
         <EditText
             android:id="@+id/editTextTelefono"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="28dp"
             android:hint="Inserisci il numero di telefono"
             android:inputType="phone"
@@ -77,26 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView5" />
 
-        <ImageView
-            android:id="@+id/imageView13"
-            android:layout_width="126dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.098"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextTelefono"
-            app:srcCompat="@android:drawable/ic_delete" />
 
-        <ImageView
-            android:id="@+id/imageView16"
-            android:layout_width="126dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTelefono"
-            app:srcCompat="@drawable/baseline_check_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

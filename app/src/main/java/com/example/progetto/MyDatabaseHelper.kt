@@ -29,6 +29,10 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         const val COLUMN_TELEFONOCONTATTO2 = "telefonocontatto2"
         const val COLUMN_TELEFONOCONTATTO3 = "telefonocontatto3"
 
+        const val COLUMN_PRINCIPIO = "principioattivo"
+        const val COLUMN_NOMEFARMACO = "nomefarmaco"
+        const val TABLE_FARMACI = "farmaci"
+
         private const val TAG = "MyDatabaseHelper"
         /*private const val CREATE_TABLE_USER =
             "CREATE TABLE user (" +
@@ -68,10 +72,39 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
                 + COLUMN_PASSWORDL + " TEXT"
                 + ")")
 
+        val farmaci = ("CREATE TABLE "+
+            TABLE_FARMACI + "("
+                + COLUMN_NOMEFARMACO + " TEXT PRIMARY KEY,"
+                + COLUMN_PRINCIPIO + " TEXT"
+                + ")"
+        )
 
         Log.d("MyDatabaseHelper", "Query di creazione della tabella: $datiUtente")
         db.execSQL(user)
         db.execSQL(datiUtente)
+        db.execSQL(farmaci)
+
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Tachipirina', 'Paracetamolo')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Brufen', 'Ibuprofene')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Cardioaspirina', 'Acido acetilsalicilico')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Lasix', 'Furosemide')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Lipitor', 'Atorvastatina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Cozaar', 'Losartan')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Glucophage', 'Metformina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Eutirox', 'Levotiroxina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Zoloft', 'Sertralina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Risperdal', 'Risperidone')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Tramal', 'Tramadolo')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Zestril', 'Lisinopril')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Zirtec', 'Cetirizina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Valium', 'Diazepam')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Lopressor', 'Metoprololo')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Coumadin', 'Warfarina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Prednisone', 'Prednisone')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Plavix', 'Clopidogrel')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Synthroid', 'Levotiroxina')")
+        db.execSQL("INSERT INTO $TABLE_FARMACI ($COLUMN_NOMEFARMACO, $COLUMN_PRINCIPIO) VALUES ('Prilosec', 'Omeprazolo')")
+
 
     }
 
