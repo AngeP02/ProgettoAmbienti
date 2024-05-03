@@ -1,5 +1,6 @@
 package com.example.progetto.Contatti
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -325,45 +326,23 @@ class ContattiFragment : Fragment() {
 
     }
 
-   private fun dispatchTakePictureIntent(phoneNumber: String) {
-       val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-       if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-       }
-   }
-
-    /*
-   private fun dispatchTakePictureIntent(phoneNumber: String) {
-       val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-       if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-           //takePictureIntent.putExtra("phoneNumber", phoneNumber) // Passa il numero di telefono come extra
-           takePictureIntent.putExtra("phoneNumber", phoneNumber)
-
-           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-       }
-   }*/
-    /*
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val phoneNumber = data?.getStringExtra("phoneNumber")
-            if (!phoneNumber.isNullOrEmpty()) {
-                val imageBitmap = data?.extras?.get("data") as Bitmap
-                sendMMS(imageBitmap, phoneNumber)
-            } else {
-                // Gestisci il caso in cui non viene fornito alcun numero di telefono
-                Toast.makeText(requireActivity(), "Numero di telefono non valido", Toast.LENGTH_SHORT).show()
-            }
+    private fun dispatchTakePictureIntent(phoneNumber: String) {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
     }
-*//*
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val phoneNumber = data?.getStringExtra("phoneNumber")
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val phoneNumber = view?.findViewById<TextView>(R.id.NumTelefono1)?.text.toString()
             if (!phoneNumber.isNullOrEmpty()) {
-                val imageBitmap = data?.extras?.get("data") as Bitmap
-                sendMMS(imageBitmap, phoneNumber)
+                val imageUri = saveImageToCache(imageBitmap)
+                if (imageUri != null) {
+                    openMessageAppWithImage(imageUri, phoneNumber)
+                }
             } else {
                 // Gestisci il caso in cui non viene fornito alcun numero di telefono
                 Toast.makeText(requireActivity(), "Numero di telefono non valido", Toast.LENGTH_SHORT).show()
@@ -371,20 +350,9 @@ class ContattiFragment : Fragment() {
         }
     }
 
-    private fun sendMMS(bitmap: Bitmap, phoneNumber: String) {
-        val imageUri = saveImageToExternalStorage(bitmap)
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("smsto:$phoneNumber")
-        intent.putExtra("sms_body", "")
-        intent.putExtra(Intent.EXTRA_STREAM, imageUri)
-        intent.type = "image/*"
-        startActivity(Intent.createChooser(intent, "Invia MMS con:"))
-    }
-
-
-    private fun saveImageToExternalStorage(bitmap: Bitmap): Uri? {
+    private fun saveImageToCache(bitmap: Bitmap): Uri? {
         val wrapper = ContextWrapper(requireContext().applicationContext)
-        val file = File(wrapper.cacheDir, "unique_filename.jpg")
+        val file = File(wrapper.cacheDir, "image.jpg")
 
         try {
             val stream: OutputStream = FileOutputStream(file)
@@ -397,64 +365,6 @@ class ContattiFragment : Fragment() {
         }
         return FileProvider.getUriForFile(requireContext(), "com.example.progetto.fileprovider", file)
     }
-*/
-*/
-    /*
-  private var photoFile: File? = null
-
-    private fun dispatchTakePictureIntent(phoneNumber: String) {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-            try {
-                photoFile = createImageFile()
-            } catch (ex: IOException) {
-                // Gestisci l'eccezione se si verifica un errore durante la creazione del file
-                ex.printStackTrace()
-            }
-            // Continua solo se il file è stato creato correttamente
-            photoFile?.also { file ->
-                val photoURI: Uri = FileProvider.getUriForFile(
-                    requireContext(),
-                    "com.example.progetto.fileprovider",
-                    file
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                takePictureIntent.putExtra("phoneNumber", phoneNumber)
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
-        }
-    }
-
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Crea un nome unico per il file immagine
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_",
-            ".jpg",
-            storageDir
-        ).apply {
-            // Salva il percorso del file, che verrà utilizzato in onActivityResult
-            currentPhotoPath = absolutePath
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            // Usa il percorso del file temporaneo per ottenere l'immagine
-            val imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-            val phoneNumber = data?.getStringExtra("phoneNumber")
-            if (!phoneNumber.isNullOrEmpty()) {
-                val imageUri = Uri.fromFile(photoFile)
-                openMessageAppWithImage(imageUri, phoneNumber)
-            } else {
-                // Gestisci il caso in cui non viene fornito alcun numero di telefono
-                Toast.makeText(requireActivity(), "Numero di telefono non valido", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     private fun openMessageAppWithImage(imageUri: Uri, phoneNumber: String) {
         val intent = Intent(Intent.ACTION_SEND)
@@ -463,12 +373,14 @@ class ContattiFragment : Fragment() {
         intent.putExtra("address", phoneNumber) // Numero di telefono come destinatario
         intent.type = "image/*"
 
-        startActivity(Intent.createChooser(intent, "Invia MMS con:"))
+        // Impostiamo il pacchetto dell'applicazione dei messaggi per avviare direttamente quell'app
+        intent.setPackage("com.google.android.apps.messaging")
+
+        startActivity(intent)
     }
 
-*/
 
-     */
+
     companion object {
         const val REQUEST_IMAGE_CAPTURE = 1
     }
