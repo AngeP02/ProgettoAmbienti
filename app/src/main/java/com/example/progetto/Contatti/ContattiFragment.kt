@@ -1,5 +1,6 @@
 package com.example.progetto.Contatti
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -7,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -21,12 +23,15 @@ import com.example.progetto.R
 import android.provider.MediaStore
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import androidx.fragment.app.FragmentManager
+
 
 
 class ContattiFragment : Fragment() {
@@ -38,7 +43,6 @@ class ContattiFragment : Fragment() {
         super.onAttach(context)
         viewModel = ContattiViewModel(requireContext().applicationContext)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +54,15 @@ class ContattiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        // Controlla se il permesso è già stato concesso
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Richiedi il permesso
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                1  // Codice di richiesta del permesso
+            )}
         // Ottenere i nomi dai metodi del ViewModel
         var nomeContatto1 = viewModel.getNome1()
         var cognomeContatto1 = viewModel.getCognome1()
@@ -325,6 +338,23 @@ class ContattiFragment : Fragment() {
         }
 
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Il permesso è stato concesso
+                // Puoi ora accedere alla memoria
+            } else {
+                // Il permesso è stato negato
+                // Gestisci il caso in cui l'utente rifiuta il permesso
+            }
+        }
+    }
 
     private fun dispatchTakePictureIntent(phoneNumber: String) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -368,6 +398,15 @@ class ContattiFragment : Fragment() {
 
     private fun openMessageAppWithImage(imageUri: Uri, phoneNumber: String) {
         val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/*"
+        intent.putExtra("address", phoneNumber)
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri)
+
+// Usa Intent.createChooser per lasciare che l'utente scelga l'app
+        startActivity(Intent.createChooser(intent, "Scegli l'app di messaggi"))
+
+    }
+        /*val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra("sms_body", "")
         intent.putExtra(Intent.EXTRA_STREAM, imageUri)
         intent.putExtra("address", phoneNumber) // Numero di telefono come destinatario
@@ -377,8 +416,11 @@ class ContattiFragment : Fragment() {
         intent.setPackage("com.google.android.apps.messaging")
 
         startActivity(intent)
-    }
 
+    }
+   */
+
+         */
 
 
     companion object {

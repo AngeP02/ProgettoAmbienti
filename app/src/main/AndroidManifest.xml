@@ -28,7 +28,16 @@
         <activity android:name=".LoginActivity" />
 
 
-    <activity android:name=".HomePageAutonoma" />
+    <activity android:name=".HomePageAutonoma"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+
+            <!-- Il tipo che indica che l'intent contiene un'immagine -->
+            <data android:mimeType="image/*" />
+        </intent-filter>
+    </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.progetto.fileprovider"
@@ -38,7 +47,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
+
         </provider>
+
 
 
     </application>
@@ -49,4 +60,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-</manifest>
+
+
+
+    </manifest>

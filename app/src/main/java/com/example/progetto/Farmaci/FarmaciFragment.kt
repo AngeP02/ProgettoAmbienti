@@ -15,8 +15,10 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.progetto.Contatti.ContattiViewModel
 import com.example.progetto.R
+//import com.example.progetto.databinding.FragmentNotificationsBinding
 
 class FarmaciFragment: Fragment() {
 
@@ -28,16 +30,37 @@ class FarmaciFragment: Fragment() {
         viewModel = FarmaciViewModel(requireContext().applicationContext)
     }
 
-    override fun onCreateView(
+    //private var _binding: FragmentNotificationsBinding? = null
+
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    //private val binding get() = _binding!!
+
+   /* override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.farmacifragment, container, false)
-    }
+    ): View {
+        val notificationsViewModel =
+            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        val textView: TextView = binding.textNotifications
+        notificationsViewModel.text.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
+        return root
+    }*/
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Trova il TimePicker e impostalo per usare il formato 24 ore
+        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+        timePicker.setIs24HourView(true)  // Imposta il formato 24 ore
         val imageViewAggiungi = view.findViewById<ImageView>(R.id.imageView13)
         imageViewAggiungi.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -95,7 +118,7 @@ class FarmaciFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Clean up any resources or references here
+       // _binding = null
     }
 /*
     val timePicker = findViewById<TimePicker>(R.id.timePicker)

@@ -25,6 +25,9 @@ class HomePageAutonoma : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
 
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.navigation_menu)
+        bottomNavigation.setupWithNavController(navController)
+
         // Configura il NavigationUI per la BottomNavigationView
         val appBarConfiguration = AppBarConfiguration(
             setOf(
