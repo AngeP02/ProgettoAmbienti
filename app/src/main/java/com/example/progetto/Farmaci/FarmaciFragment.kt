@@ -5,11 +5,15 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.TimePicker
@@ -30,52 +34,37 @@ class FarmaciFragment: Fragment() {
         viewModel = FarmaciViewModel(requireContext().applicationContext)
     }
 
-    //private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-// onDestroyView.
-    //private val binding get() = _binding!!
-
-   /* override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
-    }*/
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.farmacifragment, container, false)
+    }
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Trova il TimePicker e impostalo per usare il formato 24 ore
-        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
-        timePicker.setIs24HourView(true)  // Imposta il formato 24 ore
         val imageViewAggiungi = view.findViewById<ImageView>(R.id.imageView13)
         imageViewAggiungi.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            val inflater = LayoutInflater.from(requireContext())
-            val dialogView = inflater.inflate(R.layout.popupinseriscifarmaco, null)
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.popupinseriscifarmaco, null)
+            val timePicker = dialogView.findViewById<TimePicker>(R.id.timePicker)
+            if (timePicker != null) {
+                timePicker.setIs24HourView(true)  // Imposta il formato 24 ore
+            }
 
             builder.setView(dialogView)
                 .setPositiveButton("Salva") { dialog, which ->
-                    // Ottieni i riferimenti agli elementi nel popup
                     val editTextNomeFarmaco = dialogView.findViewById<EditText>(R.id.editTextNome)
-                    val timePicker = dialogView.findViewById<TimePicker>(R.id.timePicker)
-
-                    // Ottieni i valori inseriti dall'utente
                     val nomeFarmaco = editTextNomeFarmaco.text.toString()
-                    val ora = getTimeFromTimePicker(timePicker)
+                    val ora = if (timePicker != null) {
+                        getTimeFromTimePicker(timePicker)
+                    } else {
+                        "00:00" // valore predefinito se il timePicker non è trovato
+                    }
 
                     // Aggiungi il nuovo elemento al fragment "Farmaci"
                     addFarmaco(nomeFarmaco, ora)
@@ -85,43 +74,110 @@ class FarmaciFragment: Fragment() {
                 }
                 .show()
         }
+        // Trova il layout principale dove vengono aggiunti i farmaci
+        val parentLayout = view.findViewById<ConstraintLayout>(R.id.scrollView1)  // Assicurati che questo sia un ConstraintLayout
+
+        // Assicurati che il parentLayout sia stato trovato
+        if (parentLayout == null) {
+            Log.e("FarmaciFragment", "Parent layout non trovato")
+            return
+        }
+
+        // Imposta i listener per il pulsante "Elimina" in ogni elemento del parent layout
+        for (i in 0 until parentLayout.childCount) {
+            val child = parentLayout.getChildAt(i) // Ogni elemento nel parent layout
+
+            // Trova il pulsante "Elimina" all'interno del `ConstraintLayout`
+            val deleteButton = child.findViewById<ImageView>(R.id.elimina)
+
+            // Assicurati che il pulsante "Elimina" esista
+            if (deleteButton != null) {
+                deleteButton.setOnClickListener {
+                    // Rimuovi il `ConstraintLayout` dal parent layout
+                    parentLayout.removeView(child)
+
+                    // Dopo aver rimosso un elemento, aggiorna i vincoli degli altri elementi
+                    updateLayoutConstraints(parentLayout)
+                }
+            }
+        }
     }
 
+    private fun updateLayoutConstraints(parentLayout: ConstraintLayout) {
+        for (i in 0 until parentLayout.childCount) {
+            val child = parentLayout.getChildAt(i) as ConstraintLayout  // Assicurati che sia un ConstraintLayout
+
+            val layoutParams = child.layoutParams as ConstraintLayout.LayoutParams
+            if (i == 0) {
+                layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID  // Collegalo al top del parent
+                layoutParams.topToBottom = ConstraintLayout.LayoutParams.UNSET  // Rimuovi il collegamento al precedente elemento
+            } else {
+                val previousChild = parentLayout.getChildAt(i - 1)  // Elemento precedente
+                layoutParams.topToBottom = previousChild.id  // Collegalo all'elemento precedente
+                layoutParams.topToTop = ConstraintLayout.LayoutParams.UNSET  // Rimuovi il collegamento al top del parent
+            }
+
+            // Applica i nuovi layoutParams
+            child.layoutParams = layoutParams
+        }
+    }
+
+
+
     private fun getTimeFromTimePicker(timePicker: TimePicker): String {
-        val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            timePicker.hour
-        } else {
-            timePicker.currentHour
-        }
-        val minute = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            timePicker.minute
-        } else {
-            timePicker.currentMinute
-        }
+        val hour = timePicker.hour
+        val minute = timePicker.minute
 
         return String.format("%02d:%02d", hour, minute)
     }
-
     private fun addFarmaco(nome: String, ora: String) {
-        val constraintLayout = LayoutInflater.from(requireContext()).inflate(R.layout.itemfarmaco, null) as ConstraintLayout
+        // Inflazione del layout del riquadro da aggiungere
+        val newFarmacoView = LayoutInflater.from(requireContext()).inflate(R.layout.farmaco_nome, null) as ConstraintLayout
 
         // Imposta il nome del farmaco
-        constraintLayout.findViewById<TextView>(R.id.Nome1).text = nome
-        // Imposta l'ora
-        constraintLayout.findViewById<TextView>(R.id.Orario).text = ora
+        val nomeTextView = newFarmacoView.findViewById<TextView>(R.id.farmacoNome)
+        nomeTextView.text = nome
 
-        // Ottieni il parent layout e aggiungi il nuovo constraint layout
-        val parentLayout = requireView().findViewById<ConstraintLayout>(androidx.constraintlayout.widget.R.id.constraint)
-        parentLayout.addView(constraintLayout)
+        // Imposta l'orario
+        val oraTextView = newFarmacoView.findViewById<TextView>(R.id.farmacoOrario)
+        oraTextView.text = ora
+
+        // Ottieni il parent layout in cui aggiungere il nuovo riquadro
+        val parentLayout = requireView().findViewById<ConstraintLayout>(R.id.scrollView1)
+// Trova il pulsante "Elimina" e aggiungi il listener
+        val deleteButton = newFarmacoView.findViewById<ImageView>(R.id.elimina)
+        deleteButton.setOnClickListener {
+            parentLayout.removeView(newFarmacoView)  // Rimuovi il nuovo ConstraintLayout
+        }
+        if (parentLayout != null) {
+            val previousViewId = if (parentLayout.childCount > 0) {
+                parentLayout.getChildAt(parentLayout.childCount - 1).id
+            } else {
+                0
+            }
+
+            // Imposta il nuovo ConstraintLayout con vincoli rispetto all'elemento precedente
+            if (previousViewId > 0) {
+                newFarmacoView.id = View.generateViewId()  // Genera un ID univoco
+                newFarmacoView.layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    topToBottom = previousViewId  // Collegati all'elemento precedente
+                }
+            }
+
+            parentLayout.addView(newFarmacoView)  // Aggiungi il riquadro al ConstraintLayout interno
+        } else {
+            Log.e("FarmaciFragment", "Parent layout non trovato")
+        }
     }
+
+
 
 
     override fun onDestroyView() {
         super.onDestroyView()
-       // _binding = null
     }
-/*
-    val timePicker = findViewById<TimePicker>(R.id.timePicker)
-    timePicker.setIs24HourView(true)
-*/
+
 }
