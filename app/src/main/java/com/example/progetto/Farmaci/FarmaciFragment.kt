@@ -74,6 +74,7 @@ class FarmaciFragment: Fragment() {
                 }
                 .show()
         }
+
         // Trova il layout principale dove vengono aggiunti i farmaci
         val parentLayout = view.findViewById<ConstraintLayout>(R.id.scrollView1)  // Assicurati che questo sia un ConstraintLayout
 
@@ -83,7 +84,7 @@ class FarmaciFragment: Fragment() {
             return
         }
 
-        // Imposta i listener per il pulsante "Elimina" in ogni elemento del parent layout
+
         for (i in 0 until parentLayout.childCount) {
             val child = parentLayout.getChildAt(i) // Ogni elemento nel parent layout
 
@@ -93,34 +94,36 @@ class FarmaciFragment: Fragment() {
             // Assicurati che il pulsante "Elimina" esista
             if (deleteButton != null) {
                 deleteButton.setOnClickListener {
-                    // Rimuovi il `ConstraintLayout` dal parent layout
-                    parentLayout.removeView(child)
-
-                    // Dopo aver rimosso un elemento, aggiorna i vincoli degli altri elementi
-                    updateLayoutConstraints(parentLayout)
+                    // Passa il `ConstraintLayout` da rimuovere
+                    removeFarmaco(child as ConstraintLayout)
                 }
             }
         }
     }
 
+
     private fun updateLayoutConstraints(parentLayout: ConstraintLayout) {
         for (i in 0 until parentLayout.childCount) {
-            val child = parentLayout.getChildAt(i) as ConstraintLayout  // Assicurati che sia un ConstraintLayout
+            val child = parentLayout.getChildAt(i)
 
-            val layoutParams = child.layoutParams as ConstraintLayout.LayoutParams
-            if (i == 0) {
-                layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID  // Collegalo al top del parent
-                layoutParams.topToBottom = ConstraintLayout.LayoutParams.UNSET  // Rimuovi il collegamento al precedente elemento
-            } else {
-                val previousChild = parentLayout.getChildAt(i - 1)  // Elemento precedente
-                layoutParams.topToBottom = previousChild.id  // Collegalo all'elemento precedente
-                layoutParams.topToTop = ConstraintLayout.LayoutParams.UNSET  // Rimuovi il collegamento al top del parent
+            if (child is ConstraintLayout) { // Verifica che sia un ConstraintLayout
+                val layoutParams = child.layoutParams as ConstraintLayout.LayoutParams
+
+                if (i == 0) {
+                    layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+                    layoutParams.topToBottom = ConstraintLayout.LayoutParams.UNSET
+                } else {
+                    val previousChild = parentLayout.getChildAt(i - 1) as ConstraintLayout
+                    layoutParams.topToBottom = previousChild.id
+                    layoutParams.topToTop = ConstraintLayout.LayoutParams.UNSET
+                }
+
+                // Applica i nuovi layoutParams
+                child.layoutParams = layoutParams
             }
-
-            // Applica i nuovi layoutParams
-            child.layoutParams = layoutParams
         }
     }
+
 
 
 
@@ -132,7 +135,8 @@ class FarmaciFragment: Fragment() {
     }
     private fun addFarmaco(nome: String, ora: String) {
         // Inflazione del layout del riquadro da aggiungere
-        val newFarmacoView = LayoutInflater.from(requireContext()).inflate(R.layout.farmaco_nome, null) as ConstraintLayout
+        val newFarmacoView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.farmaco_nome, null) as ConstraintLayout
 
         // Imposta il nome del farmaco
         val nomeTextView = newFarmacoView.findViewById<TextView>(R.id.farmacoNome)
@@ -172,6 +176,16 @@ class FarmaciFragment: Fragment() {
             Log.e("FarmaciFragment", "Parent layout non trovato")
         }
     }
+    private fun removeFarmaco(farmacoView: ConstraintLayout) {
+        val parentLayout = requireView().findViewById<ConstraintLayout>(R.id.scrollView1)
+
+        // Rimuovi l'elemento
+        parentLayout.removeView(farmacoView)
+
+        // Aggiorna i vincoli
+        updateLayoutConstraints(parentLayout)
+    }
+
 
 
 

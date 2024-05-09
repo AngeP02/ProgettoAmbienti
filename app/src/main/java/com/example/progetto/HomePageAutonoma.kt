@@ -3,6 +3,7 @@ package com.example.progetto
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,7 +15,7 @@ class HomePageAutonoma : AppCompatActivity() {
 
     private lateinit var binding: HomepageBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+   /* override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = HomepageBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,4 +38,24 @@ class HomePageAutonoma : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+}*/
+   override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
+
+       binding = HomepageBinding.inflate(layoutInflater)
+       setContentView(binding.root)
+
+       val navView: BottomNavigationView = binding.navView
+
+       val navController = findNavController(R.id.nav_host_fragment_activity_main)
+       // Passing each menu ID as a set of Ids because each
+       // menu should be considered as top level destinations.
+       val appBarConfiguration = AppBarConfiguration(
+           setOf(
+               R.id.navigation_home, R.id.navigation_medicine, R.id.navigation_notifiche, R.id.navigation_contatti, R.id.navigation_profilo
+           )
+       )
+       setupActionBarWithNavController(navController, appBarConfiguration)
+       navView.setupWithNavController(navController)
+   }
 }
