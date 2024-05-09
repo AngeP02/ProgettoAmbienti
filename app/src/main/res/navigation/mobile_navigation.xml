@@ -16,4 +16,19 @@
         android:name= "com.example.progetto.Farmaci.FarmaciFragment"
         android:label="@string/Farmaci"
         tools:layout="@layout/farmacifragment" />
+    <fragment
+        android:id="@+id/navigation_notifiche"
+        android:name= "com.example.progetto.Farmaci.FarmaciFragment"
+        android:label="@string/Farmaci"
+        tools:layout="@layout/farmacifragment" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name= "com.example.progetto.Farmaci.FarmaciFragment"
+        android:label="@string/Farmaci"
+        tools:layout="@layout/farmacifragment" />
+    <fragment
+        android:id="@+id/navigation_profilo"
+        android:name= "com.example.progetto.Farmaci.FarmaciFragment"
+        android:label="@string/Farmaci"
+        tools:layout="@layout/farmacifragment" />
 </navigation>

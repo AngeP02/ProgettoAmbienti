@@ -22,10 +22,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.progetto.Contatti.ContattiViewModel
 import com.example.progetto.R
-//import com.example.progetto.databinding.FragmentNotificationsBinding
+import com.example.progetto.databinding.FarmacifragmentBinding
 
 class FarmaciFragment: Fragment() {
 
+    private var _binding: FarmacifragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private lateinit var viewModel: FarmaciViewModel
 
@@ -40,7 +45,11 @@ class FarmaciFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.farmacifragment, container, false)
+        //return inflater.inflate(R.layout.farmacifragment, container, false)
+
+        _binding = FarmacifragmentBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        return root
     }
 
 
@@ -192,6 +201,7 @@ class FarmaciFragment: Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 
 }

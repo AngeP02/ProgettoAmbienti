@@ -31,12 +31,19 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import androidx.fragment.app.FragmentManager
-
+import androidx.lifecycle.ViewModelProvider
+import com.example.progetto.databinding.ContattifragmentBinding
 
 
 class ContattiFragment : Fragment() {
 
     private lateinit var viewModel: ContattiViewModel
+
+    private var _binding: ContattifragmentBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     private var imageUri: Uri? = null
     override fun onAttach(context: Context) {
@@ -49,7 +56,11 @@ class ContattiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.contattifragment, container, false)
+        //return inflater.inflate(R.layout.contattifragment, container, false)
+
+        _binding = ContattifragmentBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -430,5 +441,6 @@ class ContattiFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         // Clean up any resources or references here
+        _binding = null
     }
 }
